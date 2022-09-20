@@ -11,3 +11,21 @@ export interface CheckInvoiceBody {
   apiKey: string;
   invoiceId: number;
 }
+
+export interface CreateInvoice {
+  InvoiceId: number;
+  StatusCode: number;
+  RequestId: number;
+  StatusDescription: string;
+  ValidationErrors: string;
+}
+
+export interface CheckInvoice {
+  InvoiceStatus: string;
+  TransactionId: string;
+  InvoiceId: number;
+  StatusCode: number;
+  RequestId: number;
+  StatusDescription: string;
+  ValidationErrors: string;
+}
