@@ -55,5 +55,10 @@
   },
   "dependencies": {
     "got": "^11.8.5"
-  }
+  },
+  "keywords": [
+    "edahab",
+    "edahab api",
+    "edahab npm"
+  ]
 }
