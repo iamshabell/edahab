@@ -24,7 +24,7 @@ To achieve that we are using _createInvoice_. And it takes, `SECRET-KEY`, `REQ_B
 
 ```typescript
 ...
-import { eDahabApi } from "edahab";
+import { eDahabApi } from "edahab-api";
 
 const app: Express = express();
 const port = 3001;
@@ -109,7 +109,7 @@ To check if the invoice is in pending, or success we are using _checkInvoice_. A
 
 ```typescript
 ...
-import { eDahabApi } from "edahab";
+import { eDahabApi } from "edahab-api";
 
 const app: Express = express();
 const port = 3001;
