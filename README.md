@@ -75,7 +75,7 @@ When it is done, it will return this:
 {
     "InvoiceId": 1122334,
     "StatusCode": 0,
-    "RequestId": 33112,
+    "RequestId": 332211,
     "StatusDescription": "Success",
     "ValidationErrors": null
 }
@@ -148,7 +148,7 @@ And here is an example of the body:
 
 ```javascript
 {
-  "invoiceId": 1489147
+  "invoiceId": 1122334
 }
 ```
 
@@ -160,7 +160,7 @@ When it is done the operation, it will return this:
     "TransactionId": null,
     "InvoiceId": 0,
     "StatusCode": 0,
-    "RequestId": 33198,
+    "RequestId": 33221,
     "StatusDescription": "Success",
     "ValidationErrors": null
 }
