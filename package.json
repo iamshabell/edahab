@@ -31,7 +31,7 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "edahab-api",
+  "name": "edahab-sdk",
   "author": "Mubarak Shabel",
   "module": "dist/edahab.esm.js",
   "size-limit": [
