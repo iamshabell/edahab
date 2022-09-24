@@ -4,7 +4,7 @@ export interface CreateInvoiceBody {
   amount: number;
   currency?: string;
   agentCode: string;
-  ReturnUrl: string;
+  ReturnUrl?: string;
 }
 
 export interface CheckInvoiceBody {
@@ -13,11 +13,13 @@ export interface CheckInvoiceBody {
 }
 
 export interface CreateInvoice {
+  InvoiceStatus?: string;
+  TransactionId?: string;
   InvoiceId: number;
   StatusCode: number;
   RequestId: number;
   StatusDescription: string;
-  ValidationErrors: string;
+  ValidationErrors?: string;
 }
 
 export interface CheckInvoice {
