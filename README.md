@@ -24,7 +24,7 @@ To achieve that we are using _createInvoice_. And it takes, `SECRET-KEY`, `REQ_B
 
 ```typescript
 ...
-import { eDahabApi } from "edahab-api";
+import { eDahabApi } from "edahab-sdk";
 
 const app: Express = express();
 const port = 3001;
@@ -93,7 +93,7 @@ If you did correct, the secret key or the api-key it will probably go through su
 6 : Invoice_Not_Found
 ```
 
-There are probably two ways so the payment will be made, it is either WEB or Pop-UP. in WEB, The _invoiceId_ is the one that you'd use for the edahab's web payment. e.g in browser type this url:
+There are probably two ways for the payment go through success, it is either WEB or Pop-UP. In POP-UP, you don't have to do nothing, it will send a pop-up to phone number holder and it'll listen the response from the action the user, is it cancelled?, is it success?, probably status code will told you that as we mentioned before. in WEB, The _invoiceId_ is the one that you'd use for the edahab's web payment portal. e.g in browser type this url:
 
 ```bash
 https://edahab.net/API/Payment?invoiceId={{invoiceId}} #-> change with generated invoiceId from the response
@@ -109,7 +109,7 @@ To check if the invoice is in pending, or success we are using _checkInvoice_. A
 
 ```typescript
 ...
-import { eDahabApi } from "edahab-api";
+import { eDahabApi } from "edahab-sdk";
 
 const app: Express = express();
 const port = 3001;
