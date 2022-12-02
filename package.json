@@ -34,6 +34,10 @@
   "name": "edahab-sdk",
   "author": "Mubarak Shabel",
   "module": "dist/edahab.esm.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iamshabell/edahab"
+  },
   "size-limit": [
     {
       "path": "dist/edahab.cjs.production.min.js",
