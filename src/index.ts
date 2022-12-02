@@ -1,52 +1,46 @@
 import CryptoJS from 'crypto-js';
 import got from 'got';
-import {
-  CreateInvoiceBody,
-  CheckInvoiceBody,
-  CreateInvoice,
-  CheckInvoice,
-} from './interfaces';
-import { prodUrl, devUrl } from './url';
+import { CheckInvoiceDTO } from './Dto/checkInvoiceDto';
+import { CreateInvoiceDTO } from './Dto/createInvoiceDto';
+import { DEVELOPEMENT_URL, PRODUCTION_URL } from './shared/config';
+import { Invoice } from './shared/interface';
 
-export const eDahabApi = (secretKey: string, isProd: boolean) => {
-  const createInvoice = async (
-    requestBody: CreateInvoiceBody
-  ): Promise<CreateInvoice> => {
-    const url = isProd ? prodUrl : devUrl;
+export class eDahabAPI {
+  private url: string = '';
+  private secretKey: string = '';
 
-    const hash = CryptoJS.SHA256(
-      JSON.stringify(requestBody) + secretKey
-    ).toString(CryptoJS.enc.Hex);
+  constructor(secretKey: string, isProd: boolean) {
+    this.secretKey = secretKey;
+    this.url = isProd ? PRODUCTION_URL : DEVELOPEMENT_URL;
+  }
 
-    const response: CreateInvoice = await got
-      .post(url + 'api/issueinvoice?hash=' + hash, {
-        json: requestBody,
+  public async createInvoice(data: CreateInvoiceDTO): Promise<Invoice> {
+    const hash = this.hashSecret(data);
+
+    const response = (await got
+      .post(this.url + 'api/issueinvoice?hash=' + hash, {
+        json: data,
       })
-      .json();
+      .json()) as Invoice;
 
     return response;
-  };
+  }
 
-  const checkInvoice = async (
-    requestBody: CheckInvoiceBody
-  ): Promise<CheckInvoice> => {
-    const url = isProd ? prodUrl : devUrl;
+  public async checkInvoice(data: CheckInvoiceDTO): Promise<Invoice> {
+    const hash = this.hashSecret(data);
 
-    const hash = CryptoJS.SHA256(
-      JSON.stringify(requestBody) + secretKey
-    ).toString(CryptoJS.enc.Hex);
-
-    const response: CheckInvoice = await got
-      .post(url + 'api/CheckInvoiceStatus?hash=' + hash, {
-        json: requestBody,
+    const response = (await got
+      .post(this.url + 'api/CheckInvoiceStatus?hash=' + hash, {
+        json: data,
       })
-      .json();
+      .json()) as Invoice;
 
     return response;
-  };
+  }
 
-  return {
-    createInvoice,
-    checkInvoice,
-  };
-};
+  private hashSecret(data: any): string {
+    return CryptoJS.SHA256(JSON.stringify(data) + this.secretKey).toString(
+      CryptoJS.enc.Hex
+    );
+  }
+}
