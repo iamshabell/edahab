@@ -24,23 +24,21 @@ To achieve that we are using _createInvoice_. And it takes, `SECRET-KEY`, `REQ_B
 
 ```typescript
 ...
-import { eDahabApi } from "edahab-sdk";
+import { eDahabAPI } from "edahab-sdk";
 
 const app: Express = express();
 const port = 3001;
 
 const YOUR_SECRET_KEY = "your_secret_key";
-const DAHAB_API = eDahabAPI(
+const DAHAB_API = new eDahabAPI(
   YOUR_SECRET_KEY,
   true, // -> IS_PRODUCTION
   );
 
-const createInvoice = DAHAB_API.createInvoice;
-
 app.post("/generate", async (req: Request, res: Response, next) => {
   try {
     const apiKey = "your_api_Key";
-    const response = await createInvoice({
+    const response = await DAHAB_API.createInvoice({
       ...req.body,
       apiKey,
     });
@@ -109,27 +107,24 @@ To check if the invoice is in pending, or success we are using _checkInvoice_. A
 
 ```typescript
 ...
-import { eDahabApi } from "edahab-sdk";
+import { eDahabAPI } from "edahab-sdk";
 
 const app: Express = express();
 const port = 3001;
 
 const YOUR_SECRET_KEY = "your_secret_key";
-const DAHAB_API = eDahabAPI(
+const DAHAB_API = new eDahabAPI(
   YOUR_SECRET_KEY,
   true, // -> IS_PRODUCTION
   );
 
-const checkInvoice = DAHAB_API.checkInvoice;
-
 app.post("/check", async (req: Request, res: Response, next) => {
   try {
-    console.log(req.body);
-
     const apiKey = "your_api_key";
-    const response = await checkInvoice({
-      ...req.body,
+    const { invoiceId } = req.body;
+    const response = await DAHAB_API.checkInvoice({
       apiKey,
+      invoiceId,
     });
 
     console.log("result: " + JSON.stringify(response));
