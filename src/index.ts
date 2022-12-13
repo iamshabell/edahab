@@ -39,12 +39,15 @@ export class eDahabAPI {
     return response;
   }
 
-  public async creditCompanyAccount(data: CreditAccountDTO): Promise<Credit> {
+  public async creditAccount(data: CreditAccountDTO): Promise<Credit> {
     const hash = this.hashSecret(data);
 
     const response = (await got
       .post(this.url + 'api/agentPayment?hash=' + hash, {
-        json: data,
+        json: {
+          ...data,
+          transactionId: Math.floor(100000 + Math.random() * 900000),
+        },
       })
       .json()) as Credit;
 
