@@ -7,3 +7,10 @@ export interface Invoice {
   StatusDescription: string;
   ValidationErrors?: string;
 }
+
+export class Credit {
+  TransactionStatus!: string;
+  TransactionMesage!: string;
+  PhoneNumber!: string;
+  TransactionId?: string;
+}

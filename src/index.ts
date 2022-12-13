@@ -2,8 +2,9 @@ import CryptoJS from 'crypto-js';
 import got from 'got';
 import { CheckInvoiceDTO } from './Dto/checkInvoiceDto';
 import { CreateInvoiceDTO } from './Dto/createInvoiceDto';
+import { CreditAccountDTO } from './Dto/creditAccountDto';
 import { DEVELOPEMENT_URL, PRODUCTION_URL } from './shared/config';
-import { Invoice } from './shared/interface';
+import { Credit, Invoice } from './shared/interface';
 
 export class eDahabAPI {
   private url: string = '';
@@ -34,6 +35,18 @@ export class eDahabAPI {
         json: data,
       })
       .json()) as Invoice;
+
+    return response;
+  }
+
+  public async creditCompanyAccount(data: CreditAccountDTO): Promise<Credit> {
+    const hash = this.hashSecret(data);
+
+    const response = (await got
+      .post(this.url + 'api/agentPayment?hash=' + hash, {
+        json: data,
+      })
+      .json()) as Credit;
 
     return response;
   }
