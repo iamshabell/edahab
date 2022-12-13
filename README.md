@@ -12,7 +12,7 @@ To install edahab-api, use:
 npm intall edahab # or yarn add edahab
 ```
 
-There are generally two available methods in the edahab api, _Generating invoices_ and _Checking Invoices_
+There are three available methods in the edahab api, _Generating invoices_, _Checking Invoices_ and _Crediting Account_
 
 ## Generating Invoices
 
@@ -61,7 +61,7 @@ And here is an example of the request body:
 {
     "edahabNumber": "62XXXXXXX",
     "amount": 1,
-    "currency": "SLSH", // -> Optional (Default USD)
+    "currency": "SLSH", // -> Optional (Default USD), also accepts SLSH
     "agentCode": "12345",
     "ReturnUrl": "https://www.facebook.com" // -> must start with https://
 }
@@ -107,16 +107,6 @@ To check if the invoice is in pending, or success we are using _checkInvoice_. A
 
 ```typescript
 ...
-import { eDahabAPI } from "edahab-sdk";
-
-const app: Express = express();
-const port = 3001;
-
-const YOUR_SECRET_KEY = "your_secret_key";
-const DAHAB_API = new eDahabAPI(
-  YOUR_SECRET_KEY,
-  true, // -> IS_PRODUCTION
-  );
 
 app.post("/check", async (req: Request, res: Response, next) => {
   try {
@@ -162,6 +152,59 @@ When it is done the operation, it will return this:
 ```
 
 If the invoiceId is correct, it is either pending or success. Otherwise it will return InvoiceId not found.
+
+## Credit to Account
+
+This method is for when you want to withdraw your money from `Edahab API` to your account. Your account is either regular account or merchant account
+
+#### An example of crediting to an account:
+
+```typescript
+...
+
+app.post("/credit", async (req: Request, res: Response, next) => {
+  try {
+    const apiKey = "your_api_key";
+    const { phoneNumber, transactionAmount, currency } = req.body;
+    const response = await DAHAB_API.creditAccount({
+      apiKey,
+      phoneNumber,
+      transactionAmount,
+      currency
+    });
+
+    console.log("result: " + JSON.stringify(response));
+    res.status(200).json(response);
+  } catch (e) {
+    console.log(e);
+
+    res.status(400).send(e);
+  }
+});
+
+...
+```
+
+And here is an example of the body:
+
+```javascript
+{
+  "phoneNumber": "62XXXXXXX",
+  "transactionAmount": 1,
+  "currency": "USD" //-> optional, it also accepts SLSH
+}
+```
+
+When it is done the operation, it will return this:
+
+```javascript
+{
+    "TransactionStatus": "Approved",
+    "TransactionMesage": "...", //-> SMS, look alike text
+    "PhoneNumber": "62XXXXXXX",
+    "TransactionId": "CX23322.4444.S22222"
+}
+```
 
 ## Support
 
