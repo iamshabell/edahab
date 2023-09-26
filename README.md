@@ -9,7 +9,7 @@ This is edahab API package for node with TypeScript.
 To install edahab-api, use:
 
 ```bash
-npm intall edahab # or yarn add edahab
+npm intall edahab-sdk # or yarn add edahab
 ```
 
 There are three available methods in the edahab api, _Generating invoices_, _Checking Invoices_ and _Crediting Account_
